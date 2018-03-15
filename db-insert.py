@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import json
 import sqlite3
-from requests import get
+from requests import get, post
 from xml.etree.ElementTree import fromstring
 from time import sleep
 import sys
@@ -58,11 +58,14 @@ for report_data in report.values():
         exit()
     except IndexError:
         print("見つからなかったのでパス...")
+        sleep(5)
         pass
-    except xml.etree.ElementTree.ParseError:
-        print("なにか起きたみたい...")
+    except:
+        post("https://maker.ifttt.com/trigger/job_end/with/key/EGlsFRS-I-X7OdvYS4Nza", json={"value1": "例外起きたみたい"})
         pass
+        
 
+post("https://maker.ifttt.com/trigger/job_end/with/key/EGlsFRS-I-X7OdvYS4Nza", json={"value1": "県名登録完了"})
 # 次にreport処理
 print("Setting Report...")
 count = 0
@@ -84,5 +87,6 @@ for report_data in report.values():
     except:
         pass
 
+post("https://maker.ifttt.com/trigger/job_end/with/key/EGlsFRS-I-X7OdvYS4Nza", json={"value1": "終わったみたいよー"})
 conn.commit()
 c.close()
